@@ -22,6 +22,14 @@ ruby 라이브러리이다.
     str = 'me2text는 "미투데이(TM)":http://me2day.net 의 글/댓글 작성 규칙이다.'
     Me2Text.me2text(str, :text)
     # => me2text는 미투데이™"의 글/댓글 작성 규칙이다.
+    
+### String 클래스 확장
+
+    require 'me2text/string_ext'
+
+    str = 'me2text는 "미투데이(TM)":http://me2day.net 의 글/댓글 작성 규칙이다.'
+    str.me2text
+    # => me2text는 <a href='http://me2day.net'>미투데이™"</a>의 글/댓글 작성 규칙이다.
 
 ### 주의 사항
 
@@ -85,7 +93,6 @@ me2text는 미투데이 글/댓글등의 글 작성 규칙을 일컫는다.
 TODO
 ----
 
-  * 소환 자동완성
   * Ruby 1.9 지원
 
 Copyright and License
