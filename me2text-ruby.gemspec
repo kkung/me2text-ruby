@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/me2day/me2text-ruby"
   s.summary     = %q{me2text parser for ruby}
   s.description = %q{me2text is text format for me2day posting.
-me2text-ruby is ruby library to me2text to HTML or plain text}
+me2text-ruby is ruby library to convert me2text to HTML or plain text}
   s.rubyforge_project = "me2text-ruby"
   s.files         = Dir['{lib/**/*,test/**/*}'] +
                       %w(.gitignore me2text-ruby.gemspec Gemfile MIT-LICENSE Rakefile README.md)
