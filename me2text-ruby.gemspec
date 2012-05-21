@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Me2Text::VERSION
   s.authors     = ["codian"]
   s.email       = ["codian@gmail.com"]
-  s.homepage    = "http://me2day.net"
+  s.homepage    = "https://github.com/me2day/me2text-ruby"
   s.summary     = %q{me2text parser for ruby}
   s.description = %q{me2text is text format for me2day posting.
 me2text-ruby is ruby library to me2text to HTML or plain text}
