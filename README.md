@@ -100,8 +100,8 @@ Contributors
 
 Authors ordered by first contribution.
 
-* Heungseok Do <codian@gmail.com>  
-* MinYoung Jung <kkungkkung@gmail.com>  
+Heungseok Do <codian@gmail.com>  
+MinYoung Jung <kkungkkung@gmail.com>  
 
 License
 -------
