@@ -94,12 +94,18 @@ TODO
 ----
 
   * Ruby 1.9 지원
+  
+Contributors
+------------
 
-Copyright and License
----------------------
+Authors ordered by first contribution.
 
-Copyright 2012 NHN Corp.
+Heungseok Do <codian@gmail.com>
+MinYoung Jung <kkungkkung@gmail.com>
 
-me2text is released under the MIT license:
+License
+-------
+
+me2text-ruby is released under the MIT license:
 
 * www.opensource.org/licenses/MIT

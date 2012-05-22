@@ -5,7 +5,7 @@ require "me2text/version"
 Gem::Specification.new do |s|
   s.name        = "me2text-ruby"
   s.version     = Me2Text::VERSION
-  s.authors     = ["codian"]
+  s.authors     = ["codian", 'kkung']
   s.email       = ["codian@gmail.com"]
   s.homepage    = "https://github.com/me2day/me2text-ruby"
   s.summary     = %q{me2text parser for ruby}
