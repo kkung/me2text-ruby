@@ -2,67 +2,59 @@
 
 require 'me2text/token'
 
-# Public: me2text 변환 메소드 제공한다.
+# me2text 변환 메소드를 제공한다.
 #
-# Examples
+# == Examples
 #
 #    require 'me2text'
 #    
 #    str = 'me2text는 "미투데이(TM)":http://me2day.net 의 글/댓글 작성 규칙이다.'
 #    Me2Text.me2text(str)
-#    # => me2text는 <a href='http://me2day.net'>미투데이™"</a>의 글/댓글 작성 규칙이다.
+#    => "me2text는 <a href='http://me2day.net'>미투데이™"</a>의 글/댓글 작성 규칙이다."
 module Me2Text
   class << self
-    # me2text(`text`)를 HTML로 변환한다.
+    
+    # me2text(+text+)를 HTML로 변환한다.
     #
-    # text - 변환할 me2text 형식의 문자열
-    # options - 다음과 같은 옵션을 지원한다. :
-    #     :symbolize - 특정 순서의 문자열을 UNICODE의 해당 심볼로 변환한다. 
-    #         지정하지 않는 경우 `true`.
-    #     :open_new_window - +:html+ 형식으로 변환시 link에 대해 클릭하면 새 창으로 열릴 
-    #         수 있도록 `<a>` 태그에 `target='_blank'`를 삽입한다. 
-    #         지정하지 않는 경우 `false`.
-    #     :allow_line_break - 라인브레이크를 허용한다. `:html` 로 변환시 라인브레이크는 
-    #                         `<br />` 태그로 변환된다. 지정하지 않는 경우 `false`. 
-    #     :limit - 변환 결과의 글자수를 제한한다. `:limit`에는 숫자를 지정하며 변환 결과는 
-    #              지정된 글자 수 까지만 변환된다.
-    #     :link_handler - 문자열에 나타나는 각 링크에 대해 지정된 block이 호출된다.
+    # === Parameters
+    # +text+ - 변환할 me2text 형식의 문자열
+    # 
+    # === Options (+options+)
+    # * <tt>:symbolize</tt> - 특정 순서의 문자열을 UNICODE의 해당 심볼로 변환한다. 지정하지 않는 경우 `true`.
+    # * <tt>:open_new_window</tt> - <tt>:html</tt> 형식으로 변환시 link에 대해 클릭하면 새 창으로 열릴 수 있도록 `<a>` 태그에 `target='_blank'`를 삽입한다. 지정하지 않는 경우 `false`.
+    # * <tt>:allow_line_break</tt> - 라인브레이크를 허용한다. <tt>:html</tt> 로 변환시 라인브레이크는  `<br />` 태그로 변환된다. 지정하지 않는 경우 `false`. 
+    # * <tt>:limit</tt> - 변환 결과의 글자수를 제한한다. <tt>:limit</tt>에는 숫자를 지정하며 변환 결과는 지정된 글자 수 까지만 변환된다.
+    # * <tt>:link_handler</tt> - 문자열에 나타나는 각 링크에 대해 지정된 block이 호출된다.
     def to_html(text, options = {})
       me2text(text, :html, options)
     end
 
     # me2text(+text+)를 평문(plain text)로 변환한다.
     #
-    # text - 변환할 me2text 형식의 문자열
-    # options - 다음과 같은 옵션을 지원한다. :
-    #     :symbolize - 특정 순서의 문자열을 UNICODE의 해당 심볼로 변환한다. 
-    #         지정하지 않는 경우 `true`.
-    #     :allow_line_break - 라인브레이크를 허용한다. `:html` 로 변환시 라인브레이크는 
-    #                         `<br />` 태그로 변환된다. 지정하지 않는 경우 `false`. 
-    #     :limit - 변환 결과의 글자수를 제한한다. `:limit`에는 숫자를 지정하며 변환 결과는 
-    #              지정된 글자 수 까지만 변환된다.
-    #     :link_handler - 문자열에 나타나는 각 링크에 대해 지정된 block이 호출된다.
+    # === Parameters
+    # +text+ - 변환할 me2text 형식의 문자열
+    # 
+    # === Options (+options+)
+    # * <tt>:symbolize</tt> - 특정 순서의 문자열을 UNICODE의 해당 심볼로 변환한다. 지정하지 않는 경우 `true`.
+    # * <tt>:open_new_window</tt> - <tt>:html</tt> 형식으로 변환시 link에 대해 클릭하면 새 창으로 열릴 수 있도록 `<a>` 태그에 `target='_blank'`를 삽입한다. 지정하지 않는 경우 `false`.
+    # * <tt>:allow_line_break</tt> - 라인브레이크를 허용한다. <tt>:html</tt> 로 변환시 라인브레이크는  `<br />` 태그로 변환된다. 지정하지 않는 경우 `false`. 
+    # * <tt>:limit</tt> - 변환 결과의 글자수를 제한한다. <tt>:limit</tt>에는 숫자를 지정하며 변환 결과는 지정된 글자 수 까지만 변환된다.
+    # * <tt>:link_handler</tt> - 문자열에 나타나는 각 링크에 대해 지정된 block이 호출된다.
     def to_text(text, options = {})
       me2text(text, :text, options)
     end
 
-    # me2text(`text`)를 지정한 형식(`format`)으로 변환한다.
+    # me2text(+text+)를 지정한 형식(+format+)으로 변환한다.
     #
-    # text - 변환할 me2text 형식의 문자열
-    # format - 변환 형식을 지정한다. `:html`, `:text` 중 하나를 지정하며 
-    #     지정하지 않은 경우 +:html+ 이 지정된다. `:html`은 HTML 형식으로 변환하며 
-    #     +:text+는 평문(plain text)으로 변환한다.
-    # options - 다음과 같은 옵션을 지원한다. :
-    #     :symbolize - 특정 순서의 문자열을 UNICODE의 해당 심볼로 변환한다. 
-    #         지정하지 않는 경우 `true`.
-    #     :open_new_window - +:html+ 형식으로 변환시 link에 대해 클릭하면 새 창으로 열릴 
-    #         수 있도록 `<a>` 태그에 `target='_blank'`를 삽입한다. 
-    #         지정하지 않는 경우 `false`.
-    #     :allow_line_break - 라인브레이크를 허용한다. `:html` 로 변환시 라인브레이크는 
-    #                         `<br />` 태그로 변환된다. 지정하지 않는 경우 `false`. 
-    #     :limit - 변환 결과의 글자수를 제한한다. `:limit`에는 숫자를 지정하며 변환 결과는 
-    #              지정된 글자 수 까지만 변환된다.
-    #     :link_handler - 문자열에 나타나는 각 링크에 대해 지정된 block이 호출된다.
+    # == Parameters
+    # * +text+ - 변환할 me2text 형식의 문자열
+    # * +format+ - 변환 형식을 지정한다. <tt>:html</tt>, <tt>:text</tt> 중 하나를 지정하며 지정하지 않은 경우 <tt>:html</tt> 이 지정된다. <tt>:html</tt>은 HTML 형식으로 변환하며 <tt>:text</tt>는 평문(plain text)으로 변환한다.
+    # === Options (+options+)
+    # * <tt>:symbolize</tt> - 특정 순서의 문자열을 UNICODE의 해당 심볼로 변환한다. 지정하지 않는 경우 `true`.
+    # * <tt>:open_new_window</tt> - <tt>:html</tt> 형식으로 변환시 link에 대해 클릭하면 새 창으로 열릴 수 있도록 `<a>` 태그에 `target='_blank'`를 삽입한다. 지정하지 않는 경우 `false`.
+    # * <tt>:allow_line_break</tt> - 라인브레이크를 허용한다. <tt>:html</tt> 로 변환시 라인브레이크는  `<br />` 태그로 변환된다. 지정하지 않는 경우 `false`. 
+    # * <tt>:limit</tt> - 변환 결과의 글자수를 제한한다. <tt>:limit</tt>에는 숫자를 지정하며 변환 결과는 지정된 글자 수 까지만 변환된다.
+    # * <tt>:link_handler</tt> - 문자열에 나타나는 각 링크에 대해 지정된 block이 호출된다.
     def me2text(text, format = :html, options = {})
       options = {
         :symbolize => true,

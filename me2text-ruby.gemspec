@@ -13,10 +13,14 @@ Gem::Specification.new do |s|
 me2text-ruby is ruby library to convert me2text to HTML or plain text}
   s.rubyforge_project = "me2text-ruby"
   s.files         = Dir['{lib/**/*,test/**/*}'] +
-                      %w(.gitignore me2text-ruby.gemspec Gemfile MIT-LICENSE Rakefile README.md)
-  s.test_files    = Dir['test/**/*']
+                      %w(.gitignore me2text-ruby.gemspec Gemfile MIT-LICENSE Rakefile README.rdoc)
+  s.test_files    = Dir['test/**/*_test.rb']
   s.executables   = ''
   s.require_paths = ["lib"]
+
+  s.extra_rdoc_files = ['MIT-LICENSE', 'README.rdoc']
+  s.rdoc_options = ["--main", "README.rdoc", "-c", "UTF-8"]
+
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"

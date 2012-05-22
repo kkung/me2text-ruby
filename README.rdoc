@@ -76,11 +76,11 @@ me2text는 미투데이 글/댓글등의 글 작성 규칙을 일컫는다.
 
 다음과 같은 특정 순서의 문자열을 심볼 문자로 변환한다. 
 
-  * ...  => … (HORIZONTAL ELLIPSIS)
-  * (TM) => ™ (TRADE MARK SIGN)
-  * (R)  => ® (REGISTERED SIGN)
-  * (C)  => © (COPYRIGHT SIGN)
-  * --   => — (EN DASH)
+* ...  => … (HORIZONTAL ELLIPSIS)
+* (TM) => ™ (TRADE MARK SIGN)
+* (R)  => ® (REGISTERED SIGN)
+* (C)  => © (COPYRIGHT SIGN)
+* --   => — (EN DASH)
 
 == TODO
 
