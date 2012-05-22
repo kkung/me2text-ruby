@@ -91,10 +91,8 @@ Authors ordered by first contribution.
 * Heungseok Do <codian@gmail.com> 
 * MinYoung Jung <kkungkkung@gmail.com>  
 
-== Copyright and License
+== License
 
-Copyright 2012 NHN Corp.
-
-me2text is released under the MIT license:
+me2text-ruby is released under the MIT license:
 
 * www.opensource.org/licenses/MIT
