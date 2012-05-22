@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 
 require 'me2text/token'
 
@@ -71,6 +71,28 @@ module Me2Text
         :limit => nil,
         :link_handler => nil
       }.merge(options)
+
+      if RUBY_VERSION < '1.9'
+        begin
+          text.dup.unpack('U*')
+        rescue ArgumentError
+          raise ArgumentError.new('me2text는 유효한 UTF-8 입력만 처리 가능합니다.')
+        end
+      else
+        is_utf8 = case text.encoding
+        when Encoding::UTF_8
+          text.dup.valid_encoding?
+        when Encoding::ASCII_8BIT, Encoding::US_ASCII
+          text.dup.force_encoding(Encoding::UTF_8).valid_encoding?
+        else
+          false
+        end
+
+        raise ArgumentError.new('me2text는 유효한 UTF-8 입력만 처리 가능합니다.') unless is_utf8
+
+        text = text.force_encoding(Encoding::UTF_8)
+      end
+
       text = strip_linebreak(text) unless options[:allow_line_break]
       
       text = Token.join_tokens(Token.tokenize(text), format, options)
@@ -87,22 +109,22 @@ module Me2Text
     end
 
     def doublequotize(text) #:nodoc:
-      text.gsub(/\"([^"]*)\"/) { |s|  "“#{$1}”" }
+      text.gsub(/\"([^"]*)\"/u) { |s|  "“#{$1}”" }
     end
 
     # 라인브레이크를 <br /> 태그로 대체한다.
     def htmlize_linebreak(text) 
-      text.gsub(/\r\n/, "<br />").gsub(/\n/, "<br />").gsub(/\r/, "<br />")
+      text.gsub(/\r\n/u, "<br />").gsub(/\n/u, "<br />").gsub(/\r/u, "<br />")
     end
 
     # 컨트롤 문자를 제거한다.
     def strip_control_chars(text) 
-      text.gsub(/[[:cntrl:]]/, "")
+      text.gsub(/[[:cntrl:]]/u, "")
     end
 
     # 라인브래이크를 공백으로 변환한다
     def strip_linebreak(text) 
-      text.gsub(/\s\r\n/, "").gsub(/\r\n/, " ").gsub(/[\r\n]/, " ")
+      text.gsub(/\s\r\n/u, "").gsub(/\r\n/u, " ").gsub(/[\r\n]/u, " ")
     end
   end
 end

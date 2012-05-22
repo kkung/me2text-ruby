@@ -1,8 +1,38 @@
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 
 require File.expand_path('../test_helper', __FILE__)
 
-class Me2TextTest < Test::Unit::TestCase  
+class Me2TextTest < Test::Unit::TestCase
+
+  if RUBY_VERSION < '1.9'
+    def test_encoding
+      #'안녕?' in EUC_KR
+      invalid_text = "\xBE\xC8\xB3\xE7?"
+      
+      assert_raise ArgumentError do
+        Me2Text.me2text(invalid_text)
+      end
+
+      assert_nothing_raised ArgumentError do
+        require 'iconv'
+        Me2Text.me2text(Iconv.conv('UTF-8', 'EUC-KR', invalid_text))
+      end
+    end
+  else
+    def test_encoding
+      #'안녕?' in EUC_KR
+      invalid_text = "\xBE\xC8\xB3\xE7?"
+      
+      assert_raise ArgumentError do
+        Me2Text.me2text(invalid_text)
+      end
+
+      assert_nothing_raised ArgumentError do
+        Me2Text.me2text(invalid_text.force_encoding(Encoding::EUC_KR).encode(Encoding::UTF_8))
+      end
+    end
+  end  
+
   def test_to_html
     cases = [
       # 일반 텍스트
@@ -30,14 +60,7 @@ class Me2TextTest < Test::Unit::TestCase
     ]
 
     cases.each_with_index do |test, index|
-      text = test[0]
-      expect = test[1]
-      result = Me2Text.me2text(text, :html)
-      if expect != result
-        flunk "TEXT:   #{text}\n" +
-              "EXPECT: #{expect}\n" +
-              "RESULT: #{result}\n"
-      end
+      assert_equal test[1], Me2Text.me2text(test[0], :html)
     end 
   end
 
@@ -50,14 +73,7 @@ class Me2TextTest < Test::Unit::TestCase
     ]
 
     cases.each_with_index do |test, index|
-      text = test[0]
-      expect = test[1]
-      result = Me2Text.me2text(text, :html, :allow_line_break => true)
-      if expect != result
-        flunk "TEXT:   #{text.inspect}\n" +
-              "EXPECT: #{expect}\n" +
-              "RESULT: #{result}\n"
-      end
+      assert_equal test[1], Me2Text.me2text(test[0], :html, :allow_line_break => true)
     end 
   end
 end

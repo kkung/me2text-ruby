@@ -5,4 +5,4 @@ Gemfile.lock
 doc/*
 pkg/*
 perf/*
-
+.rbenv-version

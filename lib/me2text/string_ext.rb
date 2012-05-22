@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require 'me2text'
 
 module Me2Text

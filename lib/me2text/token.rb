@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 
 module Me2Text
   class Token 
@@ -6,9 +6,9 @@ module Me2Text
       dquota_s = '\\xe2\\x80\\x9c|\\xe2\\x80\\x9f|\\xe2\\x9d\\x9d|\\xe2\\x80\\xb6|\\xe2\\x80\\x9d|\\x22|\\xef\\xbc\\x82'
       dquota_e = '\\xe2\\x80\\x9d|\\xe2\\x80\\x9e|\\xe2\\x9d\\x9e|\\xcb\\x9d|\\xe2\\x80\\xb3|\\xe2\\x80\\x9e|\\xe2\\x80\\x9f|\\x22|\\xef\\xbc\\x82'
       dquota_ne = '\\xe2\\x80\\x9d\\xe2\\x80\\x9e\\xe2\\x9d\\x9e\\xcb\\x9d\\xe2\\x80\\xb3\\xe2\\x80\\x9e\\xe2\\x80\\x9f\\x22\\xef\\xbc\\x82'
-      /(?:#{dquota_s})([^#{dquota_ne}]*)(?:#{dquota_e}):(http[s]?:\/\/[^\s]*)(\s|$)/
+      /(?:#{dquota_s})([^#{dquota_ne}]*)(?:#{dquota_e}):(http[s]?:\/\/[^\s]*)(\s|$)/u
     end
-    REGEX_URL = /(http[s]?:\/\/[^\s|^\'|^\"]*)([\'|\"|\s]|$)/
+    REGEX_URL = /(http[s]?:\/\/[^\s|^\'|^\"]*)([\'|\"|\s]|$)/u
     ESCAPE_CHAR = "\xc2\xa0"
 
     attr_accessor :text
@@ -71,7 +71,7 @@ module Me2Text
     end
     
     def htmlize_chars(text, options = {})
-      html_result = text.to_s.gsub(/&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+      html_result = text.to_s.gsub(/&/u, "&amp;").gsub(/</u, "&lt;").gsub(/>/u, "&gt;")
       html_result = textize(html_result, options)
       html_result
     end
@@ -82,18 +82,18 @@ module Me2Text
       }.merge(options)
 
       if options[:symbolize]
-        text = text.gsub(/\.\.\./, "…").
-                    gsub(/\(TM\)/, "™").
-                    gsub(/\(R\)/, "®").
-                    gsub(/\(C\)/, "©").
-                    gsub(/--/, "—")
+        text = text.gsub(/\.\.\./u, "…").
+                    gsub(/\(TM\)/u, "™").
+                    gsub(/\(R\)/u, "®").
+                    gsub(/\(C\)/u, "©").
+                    gsub(/--/u, "—")
       end
       text
     end
 
     class << self
       def tokenize(text, options = {})
-        tokenize_me2link(text.gsub(/\\\"/, ESCAPE_CHAR), options)
+        tokenize_me2link(text.gsub(/\\\"/u, ESCAPE_CHAR), options)
       end
       
       def tokenize_me2link(text, options = {})
@@ -295,7 +295,7 @@ module Me2Text
   end
   
   class Keyword < Token 
-    KEYWORD_REGEX = /(\[([^\[\]]+)\])/
+    KEYWORD_REGEX = /(\[([^\[\]]+)\])/u
     attr_accessor :link
     
     def initialize(keyword, options)
@@ -303,7 +303,7 @@ module Me2Text
       _keyword = keyword.to_s.strip.scan(KEYWORD_REGEX)
       _keyword = _keyword.flatten[1]
 
-      raise "키워드가 없습니다." if _keyword.nil?
+      raise ArgumentError.new("키워드가 없습니다.") if _keyword.nil?
       
       @text = _keyword.gsub(ESCAPE_CHAR, "\"")
     end
