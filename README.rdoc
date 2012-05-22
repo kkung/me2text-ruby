@@ -84,9 +84,14 @@ me2text는 미투데이 글/댓글등의 글 작성 규칙을 일컫는다.
 
 == TODO
 
+== Contributors
+
+Authors ordered by first contribution.
+
+* Heungseok Do <codian@gmail.com> 
+* MinYoung Jung <kkungkkung@gmail.com>  
 
 == Copyright and License
-
 
 Copyright 2012 NHN Corp.
 
